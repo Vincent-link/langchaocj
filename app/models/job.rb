@@ -16,6 +16,14 @@ class Job < ApplicationRecord
     self.save
   end
 
+  def self.search(search)
+    if search
+      find(:conditions => ['title LIKE ?', "%#{'php'}%"])
+    else
+      find(:all)
+    end
+  end
+
   scope :published, -> { where(is_hidden: false) }
   scope :recent, -> { order('created_at DESC') }
 
