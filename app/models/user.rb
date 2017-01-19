@@ -10,4 +10,11 @@ class User < ApplicationRecord
   def admin?
     is_admin
   end
+
+  def admin!
+    self.is_admin = true
+    self.save
+  end
+
+
 end
