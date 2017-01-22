@@ -19,10 +19,9 @@
                             <%= f.input :password_confirmation, required: true %>
                         </div>
                         <div class="form-group">
-                        <%= f.input :is_admin, hint: ("如果你想申请为公司用户的话，请勾选is_admin")%>
-
+                          <%= f.input :is_admin, hint: ("如果你想申请为公司用户的话，请勾选is_admin")%>
                         </div>
-                        <%= f.button :submit, "提交" , class: "btn btn-custom btn-lg btn-block" %>
+                        <%= f.button :submit, "提交" , class: "btn btn-custom btn-danger btn-lg btn-block" %>
                         <!-- <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Log in"> -->
                     </form>
                     <% end %>

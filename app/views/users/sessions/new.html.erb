@@ -20,7 +20,7 @@
                             <label for="key" class="sr-only">Password</label>
                             <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
                         </div>
-                        <%= f.button :submit, "提交" , class: "btn btn-custom btn-lg btn-block"%>
+                        <%= f.button :submit, "提交" , class: "btn btn-custom btn-danger btn-lg btn-block"%>
                     </form>
                     <% end %>
                     <%= render "users/shared/links" %>
