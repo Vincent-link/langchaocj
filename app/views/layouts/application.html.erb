@@ -15,13 +15,15 @@
           <div class="row">
             <%= render "common/navbar" %>
           </div>
-            <%#= render "common/flashes" %>
-            <div class="row">
+
+          <%= render "common/flashes" %>
+          <div class="row">
             <%= yield %>
           </div>
         </div>
 
-        <%= render "common/footer" %>
-
+        <div class="row">
+          <%= render "common/footer" %>
+        </div>
     </body>
 </html>
