@@ -1,79 +1,74 @@
 class JobsController < ApplicationController
-  before_action :authenticate_user! , only: [:new, :create, :edit, :update, :destroy]
-  before_action :find_job_and_check_permission , only: [:edit, :destroy, :update]
-
+    before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+    before_action :find_job_and_check_permission, only: [:edit, :destroy, :update]
 
     def index
-      @jobs = case params[:order]
-              when 'by_lower_bound'
-                Job.published.order('wage_lower_bound DESC')
-              when 'by_upper_bound'
-                Job.published.order('wage_upper_bound DESC')
-              else
-                Job.published.recent
-              end
+        @jobs = case params[:order]
+                when 'by_lower_bound'
+                    Job.published.order('wage_lower_bound DESC')
+                when 'by_upper_bound'
+                    Job.published.order('wage_upper_bound DESC')
+                else
+                    Job.published.recent
+                end
+        @jobs = Job.search(params[:search])
     end
 
-  def new
-    @job = Job.new
-  end
-
-  def show
-    @job = Job.find(params[:id])
-    if !current_user && current_user != @job.user
-      redirect_to new_user_registration_path
+    def new
+        @job = Job.new
     end
-  end
 
-  def edit
-    @job = Job.find(params[:id])
-  end
-
-  def destroy
-    @job = Job.find(params[:id])
-
-    @job.destroy
-    flash[:alert] = "Job Deleted"
-    redirect_to jobs_path
-  end
-
-  def create
-    @job = Job.new(job_params)
-    @job.user = current_user
-
-    if @job.save
-      redirect_to jobs_path
-    else
-      render :new
+    def show
+        @job = Job.find(params[:id])
+        if !current_user && current_user != @job.user
+            redirect_to new_user_registration_path
+        end
     end
-  end
 
-  def update
-    @job = Job.find(params[:id])
-
-    if @job.update(job_params)
-      redirect_to jobs_path, notice: "Update Success"
-    else
-      render :edit
+    def edit
+        @job = Job.find(params[:id])
     end
-  end
 
-  def search
-    
-  end
+    def destroy
+        @job = Job.find(params[:id])
 
-  private
-
-  def job_params
-    params.require(:job).permit(:title, :description, :wage_lower_bound, :wage_upper_bound, :contact_email, :is_hidden)
-  end
-
-  def find_job_and_check_permission
-    @job = Job.find(params[:id])
-
-    if current_user != @job.user
-      redirect_to root_path, alert: "You have no permission."
+        @job.destroy
+        flash[:alert] = 'Job Deleted'
+        redirect_to jobs_path
     end
-  end
 
+    def create
+        @job = Job.new(job_params)
+        @job.user = current_user
+
+        if @job.save
+            redirect_to jobs_path
+        else
+            render :new
+        end
+    end
+
+    def update
+        @job = Job.find(params[:id])
+
+        if @job.update(job_params)
+            redirect_to jobs_path, notice: 'Update Success'
+        else
+            render :edit
+        end
+    end
+
+    private
+
+    def job_params
+        params.require(:job).permit(:title, :description, :wage_lower_bound, :wage_upper_bound, :contact_email, :is_hidden)
+    end
+
+    def find_job_and_check_permission
+        @job = Job.find(params[:id])
+
+        if current_user != @job.user
+            redirect_to root_path, alert: 'You have no permission.'
+        end
+    end
 end

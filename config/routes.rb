@@ -1,26 +1,26 @@
 
 Rails.application.routes.draw do
-  devise_for :users, :controllers => { :registrations => "users/registrations" }
+    devise_for :users, controllers: { registrations: 'users/registrations' }
 
-
-  namespace :admin do
-    resources :jobs do
-      member do
-        post :publish
-        post :hide
-      end
-      resources :resumes
+    namespace :admin do
+        resources :jobs do
+            member do
+                post :publish
+                post :hide
+            end
+            resources :resumes
+        end
     end
-  end
 
- resources :jobs do
-   resources :resumes
- end
+    resources :jobs do
+        resources :resumes
+    end
 
- resources :search do
-   
- end
+    resources :search do
+        member do
+            get :search
+        end
+    end
 
-
-  root 'welcome#index'
+    root 'welcome#index'
 end
