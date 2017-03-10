@@ -1,7 +1,8 @@
-<div class="min-height">
+<br>
+<div class="min-height col-md-12">
 <%= simple_form_for [@job, @resume] do |f| %>
-  <%= f.input :content %>
-  <%= f.input :attachment %>
+  <%= f.input :content, :label => "自我评价"  %>
+  <%= f.input :attachment, :label => "个人简历"  %>
 
   <%= f.submit "提交", class: "btn btn-danger" %>
 <% end %>
