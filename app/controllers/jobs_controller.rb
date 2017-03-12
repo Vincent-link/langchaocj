@@ -14,47 +14,10 @@ class JobsController < ApplicationController
         @jobs = Job.search(params[:search])
     end
 
-    def new
-        @job = Job.new
-    end
-
     def show
         @job = Job.find(params[:id])
         if !current_user && current_user != @job.user
             redirect_to new_user_registration_path
-        end
-    end
-
-    def edit
-        @job = Job.find(params[:id])
-    end
-
-    def destroy
-        @job = Job.find(params[:id])
-
-        @job.destroy
-        flash[:alert] = 'Job Deleted'
-        redirect_to jobs_path
-    end
-
-    def create
-        @job = Job.new(job_params)
-        @job.user = current_user
-
-        if @job.save
-            redirect_to jobs_path
-        else
-            render :new
-        end
-    end
-
-    def update
-        @job = Job.find(params[:id])
-
-        if @job.update(job_params)
-            redirect_to jobs_path, notice: 'Update Success'
-        else
-            render :edit
         end
     end
 
